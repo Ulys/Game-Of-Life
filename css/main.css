@@ -44,10 +44,10 @@ li {
 	background-color: green;
 	height: 100%;
 }
-#stopButton {
+#clearButton {
 	background-color: red;
 }
-#generationButton {
+#lifeButton {
 	background-color: blue;
 }
 
@@ -61,15 +61,14 @@ li {
 **********************************************************/
 
 .row {
-	height: 20px;
+	height: 30px;
 }
 
 .row > div {
 	display: inline-block;
 	border: 1px solid black;
-	/*padding: 1px;*/
 	height: inherit;
-	width: 20px;
+	width: 30px;
 }
 
 .row:nth-of-type(1) > div{

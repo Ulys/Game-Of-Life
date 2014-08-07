@@ -46,7 +46,6 @@ var GameOfLifeModule = (function() {
          * @function
          */
         function onFieldClickHandler(ev) {
-            console.log("on click handler");
 
             var source = ev.srcElement;
             if (source.parentNode.className === "row" && !that.view.gameRun) {
@@ -78,46 +77,107 @@ var GameOfLifeModule = (function() {
             var source = ev.srcElement;
 
             if (source.id === "startButton") {
-                startButtonClick();
-            } else if (source.id === "stopButton") {
-                stopButtonClick();
+                startButtonClick(source);
+            } else if (source.id === "clearButton") {
+            	clearButtonClick();
+            } else if (source.id === "lifeButton") {
+            	oneLifeButton();
+            }else if (source.id in Templates) {
+            	templateButtonClick(source);
             }
 
             /**
              * Invoke when start button click
              * @function
-             * @param source source of click
+             * @param {HTMLElement} source of click
              */
-            function startButtonClick() {
-                // var newGeneration = that.model.runGeneration();
-                // that.view.updateField(newGeneration);
-                that.view.gameRun = true;
+            function startButtonClick(source) {
+
+                that.view.gameRun = !that.view.gameRun;
                 requestAnimationFrame(updateGame);
+                changeStartButton(source);
             }
 
-            function stopButtonClick() {
-                that.view.gameRun = false;
-            }
-        }
-
-        /**
-         * Update state of game continuesly while game running
-         * @function
-         */
-        function updateGame() {
-            if (that.view.gameRun) {
-                requestAnimationFrame(updateGame)
+            /**
+             * Clear field
+             * @function
+             */
+            function clearButtonClick() {
+            	that.view.clearField();
             }
 
-            that.view.curTime = new Date().getTime();
+            /**
+             * Run only one generation
+             * @function
+             */
+            function oneLifeButton() {
 
-            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED && !that.view.pause) {
+            	var newGeneration;
 
-                var newGeneration = that.model.runGeneration();
-                that.view.updateField(newGeneration);
+            	if (that.view.gameRun) {
+            		that.view.gameRun = false;
+            		changeStartButton();
+            	}
 
-                that.view.prevTime = that.view.curTime;
+            	newGeneration = that.model.runGeneration()
+            	that.view.updateField(newGeneration);
             }
+            /**
+             * Change start button to stop button
+             * @function
+             * @param {HTMLElement} source Button state
+             */
+            function changeStartButton() {
+
+            	var startButton = that.view.buttons.querySelector("#startButton");
+
+                if (that.view.gameRun) {
+                	startButton.innerHTML = "Stop";
+                } else {
+                	startButton.innerHTML = "Start";
+                }
+            }
+
+            /**
+             * Draw template on the field
+             * @function
+             */
+            function templateButtonClick(source) {
+
+            	var template = Templates[source.id],
+            		aliveCells = that.model.markTemplate(template)
+
+            	that.view.gameRun = false;
+            	that.view.clearField();
+            	that.view.updateField(aliveCells);
+            }
+
+            /**
+	         * Update state of game continuesly while game running
+	         * @function
+	         */
+	        function updateGame() {
+	            if (that.view.gameRun) {
+	                requestAnimationFrame(updateGame)
+	            }
+
+	            that.view.curTime = new Date().getTime();
+
+	            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED && !that.view.pause) {
+
+	                var newGeneration = that.model.runGeneration();
+
+	                // if newGeneration empty stop animation
+	                if (!newGeneration.length) {
+	                	that.view.gameRun = false;
+	                	changeStartButton();
+	                }
+
+	                that.view.updateField(newGeneration);
+
+	                that.view.prevTime = that.view.curTime;
+	            }
+	        }
         }
 
 
