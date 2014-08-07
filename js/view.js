@@ -53,10 +53,10 @@ var ViewModule = (function() {
         console.log("view draw field ...");
 
         var i, j, cell, row, rowNum, colNum,
-            field = document.createDocumentFragment(),
-            pixelRatio = window.devicePixelRatio;
-            console.log(pixelRatio)
+            field = document.createDocumentFragment();
+
         for (i = 0, rowNum = this.rowNumber; i < rowNum; i++) {
+
             row = document.createElement("div");
             row.className = "row";
             for (j = 0, colNum = this.colNumber; j < colNum; j++) {
@@ -64,7 +64,6 @@ var ViewModule = (function() {
                 cell = document.createElement("div");
                 cell.className = "dead";
                 row.appendChild(cell);
-                // cell.style.width *= pixelRatio;
             }
 
             field.appendChild(row);
@@ -105,11 +104,14 @@ var ViewModule = (function() {
      * @return {Number} number of cells in a row
      */
     function _countNumberOfColumns(container) {
-        var HORIZONTAL_MARGINS = 100, //px horizontal margins
-            contWidth = container.clientWidth,
-            pixelRatio = window.devicePixelRatio;
+        var cellWidth,
+            pixelRatio = window.devicePixelRatio,
+            horizontalMatrgins = 100 * pixelRatio, //px horizontal margins
+            contWidth = container.clientWidth;
 
-        return Math.floor((contWidth - HORIZONTAL_MARGINS) / (View.CELL_WIDTH * pixelRatio));
+            cellWidth = pixelRatio * View.CELL_WIDTH;
+
+        return Math.floor((contWidth - horizontalMatrgins) / cellWidth);
     }
 
     /**
@@ -117,12 +119,15 @@ var ViewModule = (function() {
      * @return {Number} number of cells in a row
      */
     function _countNumberOfRows() {
-        var HEADER_HEIGHT = 100, //px header height
-            VERTICAL_MARGINS = 100, //px vertical margins
+        var cellWidth,
             winHeight = window.innerHeight,
-            pixelRatio = window.devicePixelRatio;
+            pixelRatio = window.devicePixelRatio,
+            headerHeight = 100 * pixelRatio, //px header height
+            verticalMargins = 100 * pixelRatio; //px vertical margins
 
-        return Math.floor((winHeight - HEADER_HEIGHT - VERTICAL_MARGINS) / (View.CELL_WIDTH * pixelRatio));
+            cellWidth = pixelRatio * View.CELL_WIDTH;
+
+        return Math.floor((winHeight - headerHeight - verticalMargins) / cellWidth);
     }
 
     /**

@@ -23,6 +23,7 @@ body {
 /*********************************************************
 HEADER
 **********************************************************/
+
 header {
 	text-align: center;
 	color: #160a47;
@@ -42,7 +43,6 @@ li {
 }
 #startButton {
 	background-color: green;
-	height: 100%;
 }
 #clearButton {
 	background-color: red;
@@ -55,6 +55,8 @@ li {
 	border: solid 2px black;
 	vertical-align: center;
 }
+
+
 
 /*********************************************************
  FIELD
@@ -94,6 +96,9 @@ li {
 .dead {
 	background-color: white;
 }
+
+
+
 /*********************************************************
  DIALOG
 **********************************************************/
@@ -110,4 +115,60 @@ li {
 
 #statistic{
 	background-color: inherit;
+}
+
+
+
+/*********************************************************
+ MEDIA QUERY
+**********************************************************/
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi){
+    .row {
+		height: 35px;
+	}
+
+	.row > div {
+		width: 35px;
+	}
+}
+
+/* 1.3 dpr */
+@media (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi){
+    .row {
+		height: 40px;
+	}
+
+	.row > div {
+		width: 40px;
+	}
+}
+
+/* 1.5 dpr */
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi){
+    .row {
+		height: 45px;
+	}
+
+	.row > div {
+		width: 45px;
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+	.controls > li{
+		height: 5rem;
+		width: 7rem;
+	}
+
+	.button {
+		height: 100%;
+	}
+    .row {
+		height: 60px;
+	}
+
+	.row > div {
+		width: 60px;
+	}
 }
