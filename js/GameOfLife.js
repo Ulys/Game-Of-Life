@@ -30,7 +30,7 @@ var GameOfLifeModule = (function() {
         this.view.drawField();
         this.model.setCells(this.view.cells);
         this.bindEvents();
-    }
+    };
 
     /**
      * Add event listeners to cells and buttons
@@ -38,9 +38,6 @@ var GameOfLifeModule = (function() {
      */
     GameOfLife.prototype.bindEvents = function() {
 
-        var that = this;
-        this.view.container.addEventListener("click", onFieldClickHandler);
-        this.view.buttons.addEventListener("click", onButtonClickHandler);
         /**
          * Handle click event
          * @function
@@ -119,7 +116,7 @@ var GameOfLifeModule = (function() {
             		changeStartButton();
             	}
 
-            	newGeneration = that.model.runGeneration()
+            	newGeneration = that.model.runGeneration();
             	that.view.updateField(newGeneration);
             }
             /**
@@ -145,7 +142,7 @@ var GameOfLifeModule = (function() {
             function templateButtonClick(source) {
 
             	var template = Templates[source.id],
-            		aliveCells = that.model.markTemplate(template)
+            		aliveCells = that.model.markTemplate(template);
 
             	that.view.gameRun = false;
             	that.view.clearField();
@@ -158,7 +155,7 @@ var GameOfLifeModule = (function() {
 	         */
 	        function updateGame() {
 	            if (that.view.gameRun) {
-	                requestAnimationFrame(updateGame)
+	                requestAnimationFrame(updateGame);
 	            }
 
 	            that.view.curTime = new Date().getTime();
@@ -180,8 +177,12 @@ var GameOfLifeModule = (function() {
 	        }
         }
 
+        var that = this;
 
-    }
+        this.view.container.addEventListener("click", onFieldClickHandler);
+        this.view.buttons.addEventListener("click", onButtonClickHandler);
+
+    };
 
     return GameOfLife;
 })();

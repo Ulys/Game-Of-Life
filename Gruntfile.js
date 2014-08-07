@@ -8,7 +8,14 @@ module.exports = function(grunt) {
                 latedef: true,
                 newcap: true,
                 undef: true,
-                browser: true
+                browser: true,
+                globals: {
+                    console: true,
+                    ViewModule: true,
+                    Templates: true,
+                    GameOfLifeModule: true,
+                    FieldModule: true
+                }
             }
         },
         jasmine: {
@@ -35,7 +42,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-stylus");
 
-    grunt.registerTask("test", ["jshint", "jasmine"]);
+    grunt.registerTask("hint", ["jshint"]);
     grunt.registerTask("style", ["stylus"]);
     grunt.registerTask("default", ["jshint", "jasmine", "stylus"]);
 }

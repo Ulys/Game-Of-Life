@@ -7,7 +7,7 @@
  * @module View module
  */
 var ViewModule = (function() {
-
+    "use strict";
     /**
      * @constructor
      * @param {HTMLElement} container
@@ -71,7 +71,7 @@ var ViewModule = (function() {
 
         this.container.appendChild(field);
         this._saveCells();
-    }
+    };
     /**
      * Get cells from container
      * @function
@@ -97,7 +97,7 @@ var ViewModule = (function() {
         }
 
         this.cells = cellsArray;
-    }
+    };
 
     /**
      * @function count number of cell in row respectively to the screen size
@@ -139,7 +139,7 @@ var ViewModule = (function() {
         console.log("View update field ...");
         this.clearField();
         this._drawAliveCells(aliveCells);
-    }
+    };
 
     /**
      * Paint all cells to dead state
@@ -153,7 +153,7 @@ var ViewModule = (function() {
                 el.className = View.deadCell;
             });
         });
-    }
+    };
 
     /**
      * @function
@@ -165,7 +165,7 @@ var ViewModule = (function() {
         aliveCells.forEach(function(el) {
             el.className = View.aliveCell;
         });
-    }
+    };
 
     return View;
 })();

@@ -38,4 +38,4 @@
  		"glider": glider,
  		"cross": cross
  	};
- })()
+ })();
