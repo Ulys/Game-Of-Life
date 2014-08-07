@@ -47,6 +47,7 @@ var FieldModule = (function() {
                 return Field._checkRules(element.className, aliveNeighbors);
             }));
             willAlive = temp;
+            console.log(willAlive);
         });
 
         return willAlive;
@@ -74,7 +75,7 @@ var FieldModule = (function() {
             for (j = 0; j < size; j++, curCol++) {
 
                 if (cells[curRow] && cells[curRow][curCol] &&
-                    !(curRow !== row && curCol !== col)) {
+                    !(curRow === row && curCol === col)) {
 
                     cells[curRow][curCol].className === "alive" && aliveNeighbors++;
                 }

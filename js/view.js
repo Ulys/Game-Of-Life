@@ -21,12 +21,22 @@ var ViewModule = (function() {
         this.colNumber = _countNumberOfColumns(container);
         this.rowNumber = _countNumberOfRows();
         this.cells = null;
+        this.gameRun = false;
+        this.pause = false;
+        this.curTime = 0;
+        this.prevTime = 0;
     }
+
+    /**
+     * @const frequency of field refresh while game is run
+     */
+    View.GAME_SPEED = 250;
 
     /**
      * @const {String} CSS class of dead cell
      */
     View.deadCell = "dead";
+
     /**
      * @const {String} CSS class of alive cell
      */

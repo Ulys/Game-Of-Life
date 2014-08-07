@@ -9,11 +9,6 @@
 var GameOfLifeModule = (function() {
 
     /**
-     * @const frequency of field refresh while game is run
-     */
-    var GAME_SPEED = 250;
-
-    /**
      * GameOfLife constructor
      * @constructor
      * @param {Field} model
@@ -23,7 +18,6 @@ var GameOfLifeModule = (function() {
         console.log("Game Of Life constructor ...");
         this.model = model;
         this.view = view;
-        this.gameRun = false;
     }
 
     /**
@@ -55,7 +49,7 @@ var GameOfLifeModule = (function() {
             console.log("on click handler");
 
             var source = ev.srcElement;
-            if (source.parentNode.className === "row") {
+            if (source.parentNode.className === "row" && !that.view.gameRun) {
                 gameCellClick(source);
             }
 
@@ -85,6 +79,8 @@ var GameOfLifeModule = (function() {
 
             if (source.id === "startButton") {
                 startButtonClick();
+            } else if (source.id === "stopButton") {
+                stopButtonClick();
             }
 
             /**
@@ -93,10 +89,37 @@ var GameOfLifeModule = (function() {
              * @param source source of click
              */
             function startButtonClick() {
-                var newGeneration = that.model.runGeneration();
-                that.view.updateField(newGeneration);
+                // var newGeneration = that.model.runGeneration();
+                // that.view.updateField(newGeneration);
+                that.view.gameRun = true;
+                requestAnimationFrame(updateGame);
+            }
+
+            function stopButtonClick() {
+                that.view.gameRun = false;
             }
         }
+
+        /**
+         * Update state of game continuesly while game running
+         * @function
+         */
+        function updateGame() {
+            if (that.view.gameRun) {
+                requestAnimationFrame(updateGame)
+            }
+
+            that.view.curTime = new Date().getTime();
+
+            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED && !that.view.pause) {
+
+                var newGeneration = that.model.runGeneration();
+                that.view.updateField(newGeneration);
+
+                that.view.prevTime = that.view.curTime;
+            }
+        }
+
 
     }
 
