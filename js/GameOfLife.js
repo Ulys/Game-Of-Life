@@ -19,13 +19,22 @@ var GameOfLifeModule = (function () {
 		this.model = model;
 		this.view = view;
 	}
-
+	/**
+	 * Create game
+	 * @function
+	 */
 	GameOfLife.prototype.initGame = function() {
 		console.log("Game Of Life init game ...");
 
 		this.view.drawField();
 		this.model.createField(this.view.container);
-		// console.dir(this.model.cells);
+
+	}
+	/**
+	 * Add event listeners to cells and buttons
+	 * @function
+	 */
+	GameOfLife.prototype.bindEvents = function() {
 
 	}
 
