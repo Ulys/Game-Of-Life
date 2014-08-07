@@ -6,73 +6,146 @@
 /**
  * @module View module
  */
-var ViewModule = (function () {
+var ViewModule = (function() {
 
-	/**
-	 * @constructor
-	 * @param {HTMLElement} container
-	 */
-	function View(container) {
-		this.container = container;
-		this.colNumber = countNumberOfColumns(container);
-		this.rowNumber = countNumberOfRows();
-	}
+    /**
+     * @constructor
+     * @param {HTMLElement} container
+     * @param {HTMLElement} buttons
+     */
+    function View(container, buttons) {
+        console.log("View constructor ...");
 
-	/**
-	 * @function create field
-	 */
-	View.prototype.drawField = function () {
-		console.log("view draw field ...");
+        this.container = container;
+        this.buttons = buttons;
+        this.colNumber = _countNumberOfColumns(container);
+        this.rowNumber = _countNumberOfRows();
+        this.cells = null;
+    }
 
-		var i, j, cell, row, rowNum, colNum,
-			field = document.createDocumentFragment();
+    /**
+     * @const {String} CSS class of dead cell
+     */
+    View.deadCell = "dead";
+    /**
+     * @const {String} CSS class of alive cell
+     */
+    View.aliveCell = "alive";
 
-		for (i = 0, rowNum = this.rowNumber; i < rowNum; i++) {
+    /**
+     * @function create field
+     */
+    View.prototype.drawField = function() {
+        console.log("view draw field ...");
 
-			row = document.createElement("div");
-			row.className = "row";
+        var i, j, cell, row, rowNum, colNum,
+            field = document.createDocumentFragment();
 
-			for (j = 0, colNum = this.colNumber; j < colNum; j++) {
+        for (i = 0, rowNum = this.rowNumber; i < rowNum; i++) {
+            row = document.createElement("div");
+            row.className = "row";
 
-				cell = document.createElement("div");
-				cell.className = "dead";
-				row.appendChild(cell);
+            for (j = 0, colNum = this.colNumber; j < colNum; j++) {
 
-			}
+                cell = document.createElement("div");
+                cell.className = "dead";
+                row.appendChild(cell);
+            }
 
-		field.appendChild(row);
+            field.appendChild(row);
+        }
 
-		}
+        this.container.appendChild(field);
+        this._saveCells();
+    }
+    /**
+     * Get cells from container
+     * @function
+     * @private
+     */
+    View.prototype._saveCells = function() {
+        console.log("View save cells ...");
 
-		this.container.appendChild(field);
-	}
+        var i, j, row, rowNum, colNum, cell,
+            allRows = this.container.children,
+            cellsArray = [];
 
+        for (i = 0, rowNum = allRows.length; i < rowNum; i++) {
 
-	/**
-	 * @function count number of cell in row respectively to the screen size
-	 * @return {Number} number of cells in a row
-	 */
-	function countNumberOfColumns(container) {
-		var	CELL_WIDTH = 20,							//px standart cell width
-			HORIZONTAL_MARGINS = 100,					//px horizontal margins
-			contWidth = container.clientWidth;
+            cellsArray[i] = [];
+            row = allRows[i].children;
 
-		return Math.floor((contWidth - HORIZONTAL_MARGINS) / CELL_WIDTH);
-	}
+            for (j = 0, colNum = row.length; j < colNum; j++) {
 
-	/**
-	 * @function count number of cell in column respectively to the screen size
-	 * @return {Number} number of cells in a row
-	 */
-	function countNumberOfRows() {
-		var	CELL_WIDTH = 20,							//px standart cell width
-			HEADER_HEIGHT = 100,						//px header height
-			VERTICAL_MARGINS = 100,						//px vertical margins
-			winHeight = window.innerHeight;
+                cell = row[j];
+                cellsArray[i].push(cell);
+            }
+        }
 
-			console.log(winHeight);
-		return Math.floor((winHeight - HEADER_HEIGHT - VERTICAL_MARGINS) / CELL_WIDTH);
-	}
+        this.cells = cellsArray;
+    }
 
-	return View;
+    /**
+     * @function count number of cell in row respectively to the screen size
+     * @return {Number} number of cells in a row
+     */
+    function _countNumberOfColumns(container) {
+        var CELL_WIDTH = 20, //px standart cell width
+            HORIZONTAL_MARGINS = 100, //px horizontal margins
+            contWidth = container.clientWidth;
+
+        return Math.floor((contWidth - HORIZONTAL_MARGINS) / CELL_WIDTH);
+    }
+
+    /**
+     * @function count number of cell in column respectively to the screen size
+     * @return {Number} number of cells in a row
+     */
+    function _countNumberOfRows() {
+        var CELL_WIDTH = 20, //px standart cell width
+            HEADER_HEIGHT = 100, //px header height
+            VERTICAL_MARGINS = 100, //px vertical margins
+            winHeight = window.innerHeight;
+
+        return Math.floor((winHeight - HEADER_HEIGHT - VERTICAL_MARGINS) / CELL_WIDTH);
+    }
+
+    /**
+     * Update view
+     * @function
+     * @param {Array[HTMLElements]} aliveCells
+     */
+    View.prototype.updateField = function(aliveCells) {
+        console.log("View update field ...");
+        this.clearField();
+        this._drawAliveCells(aliveCells);
+    }
+
+    /**
+     * Paint all cells to dead state
+     * @function
+     */
+    View.prototype.clearField = function() {
+        console.log("View clear field ...");
+        this.cells.forEach(function(row) {
+
+            row.forEach(function(el) {
+                el.className = View.deadCell;
+            });
+        });
+    }
+
+    /**
+     * @function
+     * @private
+     * @param {Array[HTMLElements]} aliveCells
+     */
+    View.prototype._drawAliveCells = function(aliveCells) {
+        console.log("View draw alive cells ...");
+        aliveCells.forEach(function(el) {
+            el.className = View.aliveCell;
+        });
+    }
+
+    return View;
 })();
