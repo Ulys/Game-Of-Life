@@ -1,2 +1,4 @@
 Game-Of-Life
-Game Preview: ulys.github.io/Game-Of-Life-Preview/
+
+
+Game Preview: http://ulys.github.io/Game-Of-Life-Preview/
