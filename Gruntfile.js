@@ -3,12 +3,18 @@ module.exports = function(grunt) {
         jshint: {
             files: ["js/*"],
             options: {
+                bitwise: true,
+                freeze: true,
+                noarg: true,
+                noempty: true,
+                nonew: true,
                 eqeqeq: true,
                 curly: true,
-                latedef: true,
                 newcap: true,
                 undef: true,
                 browser: true,
+                strict: true,
+                maxlen: 90,
                 globals: {
                     console: true,
                     ViewModule: true,
@@ -26,23 +32,28 @@ module.exports = function(grunt) {
                 }
             }
         },
-        stylus: {
-            files: {
-                "css/main.css": ["styl/main.styl"]
+        uglify: {
+            options: {
+                mangle: false
+            },
+            my_target:{
+                files: {
+                    "product/js/game.min.js":["js/gameOfLife.js", "js/field.js", "js/main.js", "js/view.js", "js/template.js"]
+                }
             }
         },
         watch: {
             files: ["js/*", "css/*", "stylus/*"],
-            tsks: ["jshint", "jasmine", "stylus"]
+            tsks: ["jshint"]
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-jasmine");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks("grunt-contrib-stylus");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
 
     grunt.registerTask("hint", ["jshint"]);
-    grunt.registerTask("style", ["stylus"]);
-    grunt.registerTask("default", ["jshint", "jasmine", "stylus"]);
+    grunt.registerTask("ugl", ["uglify"]);
+    grunt.registerTask("default", ["jshint", "jasmine"]);
 }

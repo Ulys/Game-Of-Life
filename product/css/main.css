@@ -55,9 +55,6 @@ li {
 	border: solid 2px black;
 	vertical-align: center;
 }
-.templates > li {
-	background-color: white;
-}
 
 
 
@@ -162,10 +159,6 @@ li {
 	.controls > li{
 		height: 5rem;
 		width: 7rem;
-	}
-
-	.buttons > div {
-		font-size: 2em;
 	}
 
 	.button {

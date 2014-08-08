@@ -7,7 +7,7 @@
  * @module GameOfLifeModule
  */
 var GameOfLifeModule = (function() {
-
+    "use strict";
     /**
      * GameOfLife constructor
      * @constructor
@@ -15,7 +15,7 @@ var GameOfLifeModule = (function() {
      * @param {View} view
      */
     function GameOfLife(model, view) {
-        console.log("Game Of Life constructor ...");
+
         this.model = model;
         this.view = view;
     }
@@ -25,7 +25,6 @@ var GameOfLifeModule = (function() {
      * @function
      */
     GameOfLife.prototype.initGame = function() {
-        console.log("Game Of Life init game ...");
 
         this.view.drawField();
         this.model.setCells(this.view.cells);
@@ -45,7 +44,9 @@ var GameOfLifeModule = (function() {
         function onFieldClickHandler(ev) {
 
             var source = ev.srcElement;
+
             if (source.parentNode.className === "row" && !that.view.gameRun) {
+
                 gameCellClick(source);
             }
 
@@ -57,8 +58,10 @@ var GameOfLifeModule = (function() {
             function gameCellClick(source) {
 
                 if (ViewModule.aliveCell === source.className) {
+
                     source.className = ViewModule.deadCell;
                 } else {
+
                     source.className = ViewModule.aliveCell;
                 }
             }
@@ -74,13 +77,20 @@ var GameOfLifeModule = (function() {
             var source = ev.srcElement;
 
             if (source.id === "startButton") {
+
                 startButtonClick(source);
+
             } else if (source.id === "clearButton") {
-            	clearButtonClick();
+
+                clearButtonClick();
+
             } else if (source.id === "lifeButton") {
-            	oneLifeButton();
+
+                oneLifeButton();
+
             }else if (source.id in Templates) {
-            	templateButtonClick(source);
+
+                templateButtonClick(source);
             }
 
             /**
@@ -100,6 +110,7 @@ var GameOfLifeModule = (function() {
              * @function
              */
             function clearButtonClick() {
+
             	that.view.clearField();
             }
 
@@ -112,6 +123,7 @@ var GameOfLifeModule = (function() {
             	var newGeneration;
 
             	if (that.view.gameRun) {
+
             		that.view.gameRun = false;
             		changeStartButton();
             	}
@@ -129,8 +141,10 @@ var GameOfLifeModule = (function() {
             	var startButton = that.view.buttons.querySelector("#startButton");
 
                 if (that.view.gameRun) {
+
                 	startButton.innerHTML = "Stop";
                 } else {
+
                 	startButton.innerHTML = "Start";
                 }
             }
@@ -160,12 +174,13 @@ var GameOfLifeModule = (function() {
 
 	            that.view.curTime = new Date().getTime();
 
-	            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED && !that.view.pause) {
+	            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED) {
 
 	                var newGeneration = that.model.runGeneration();
 
 	                // if newGeneration empty stop animation
 	                if (!newGeneration.length) {
+
 	                	that.view.gameRun = false;
 	                	changeStartButton();
 	                }
