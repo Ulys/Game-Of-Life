@@ -6,7 +6,7 @@
 /**
  * @module View module
  */
-var ViewModule = (function() {
+var View = (function() {
     "use strict";
 
     /**

@@ -7,7 +7,7 @@
  *@module Field
  */
 
-var FieldModule = (function () {
+var Field = (function () {
 	"use strict";
 	/**
 	 * @constructor Field class
@@ -87,7 +87,8 @@ var FieldModule = (function () {
 	 */
 	Field._checkNeighborhood = function (col, row, cells) {
 
-		var i, j,
+		var i,
+			j,
 			curCol = col - 1, // curCol, curY - coordiantes of left up
 			curRow = row - 1, // neightboor, from it starts checking
 			size = 3, // size of neiborhood square
@@ -100,7 +101,7 @@ var FieldModule = (function () {
 				if (cells[curRow] && cells[curRow][curCol] &&
 					!(curRow === row && curCol === col)) {
 
-					if (cells[curRow][curCol].className === ViewModule.aliveCell){
+					if (cells[curRow][curCol].className === View.aliveCell){
 						aliveNeighbors++;
 					}
 				}
@@ -126,7 +127,7 @@ var FieldModule = (function () {
 	 */
 	Field._checkRules = function (curState, neighbors) {
 
-		if (curState === "alive") {
+		if (curState === View.aliveCell) {
 
 			return Field.minNeighborsToLive === neighbors ||
 				neighbors === Field.maxNeighborsToLive;
@@ -143,7 +144,10 @@ var FieldModule = (function () {
 	 */
 	Field.prototype.markTemplate = function (template) {
 
-		var i, j, rowNum, colNum,
+		var i,
+			j,
+			rowNum,
+			colNum,
 			aliveCells = [],
 			startCoord = this._positionTemplate(template),
 			row = startCoord.row,
@@ -212,25 +216,31 @@ var FieldModule = (function () {
 	 */
 	Field.prototype._compareConfiguration = function (newConf) {
 
-		var i, j, compareFlg,
+		var i,
+			j,
+			compareFlg,
 			newLeng = newConf.length,
 			curLeng = this.curConfiguration.length;
 
 		if (newLeng !== curLeng) {
+
 			return false;
 		}
 
 		for (i = 0; i < newLeng; i++) {
+
 			compareFlg = false;
 
 			for (j = 0; j < curLeng; j++) {
 
 				if (newConf[i] === this.curConfiguration[j]){
+
 					compareFlg = true;
 				}
 			}
 
 			if (!compareFlg) {
+
 				return false;
 			}
 		}

@@ -1,12 +1,12 @@
 /**
- * @fileoverview GameLogicModule (controller)
+ * @fileoverview GameLogic module (controller)
  * @author anton_razumovskyi@epam.com
  */
 
 /**
- * @module GameOfLifeModule
+ * @module GameOfLife
  */
-var GameOfLifeModule = (function() {
+var GameOfLife = (function() {
     "use strict";
     /**
      * GameOfLife constructor
@@ -57,12 +57,12 @@ var GameOfLifeModule = (function() {
              */
             function gameCellClick(source) {
 
-                if (ViewModule.aliveCell === source.className) {
+                if (View.aliveCell === source.className) {
 
-                    source.className = ViewModule.deadCell;
+                    source.className = View.deadCell;
                 } else {
 
-                    source.className = ViewModule.aliveCell;
+                    source.className = View.aliveCell;
                 }
             }
         }
@@ -174,7 +174,7 @@ var GameOfLifeModule = (function() {
 
 	            that.view.curTime = new Date().getTime();
 
-	            if ((that.view.curTime - that.view.prevTime) > ViewModule.GAME_SPEED) {
+	            if ((that.view.curTime - that.view.prevTime) > View.GAME_SPEED) {
 
 	                var newGeneration = that.model.runGeneration();
 

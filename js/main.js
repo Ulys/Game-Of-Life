@@ -5,9 +5,9 @@
 
     var container = document.getElementById("container"),
         buttons = document.getElementById("buttons"),
-        view = new ViewModule(container, buttons),
-        field = new FieldModule(),
-        controller = new GameOfLifeModule(field, view),
+        view = new View(container, buttons),
+        field = new Field(),
+        controller = new GameOfLife(field, view),
         animationFrame = window.requestAnimationFrame ||
             window.msRequestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
