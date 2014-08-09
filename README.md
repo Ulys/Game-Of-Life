@@ -6,7 +6,7 @@ Game-Of-Life
 
 ### Usage
 
-'''bash
+```bash
 npm install
 grunt
-'''
+```
