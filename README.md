@@ -1,4 +1,12 @@
 Game-Of-Life
 
+## Game Preview
 
-Game Preview: http://ulys.github.io/Game-Of-Life-Preview/
+[game-of-life](http://ulys.github.io/Game-Of-Life-Preview/)
+
+### Usage
+
+'''bash
+npm install
+grunt
+'''
